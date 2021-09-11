@@ -1,5 +1,6 @@
-from flask import Flask, g, render_template, url_for, request, redirect
 import smtplib
+from SendEmail import Send
+from flask import Flask, g, render_template, url_for, request, redirect
 from email.message import EmailMessage
 
 app = Flask(__name__)
@@ -9,36 +10,14 @@ def index():
     g.active_home = True
     return render_template('home.html')
 
-# @app.route('/test')
-# @app.route('/test/<name>/<num>')
-# def test(name=None, num=None):
-#     return render_template('test.html', name=name, num=num)
-
 def send_sk_at_erc51_ru():
-    smtplib
-    # with open('test.html') as file:
-    #     html = file.readlines()
-    """
-    Мурмаши, энергетиков 7, 7
-    Dmitrey Kashkin <dmi3ii@gmail.com>	18 августа 2021 г., 17:59
-    Кому: sk@erc51.ru
-    10061713 120, 10061712 65
-    """
     if request.form["send_sk_at_erc51_ru"]:
-        # gmail_user = "send.ipu@gmail.com"
-
-# "send.ipu.py@gmail.com"
-
-        gmail_password = "send.ipu.py_51"
-
-        # msg = EmailMessage()
-        # msg["Subject"] = request.form["fio"] + " " + request.form["address"]
-        # msg["From"] = request.form["email"]
-        # msg["To"] = "dmi3ii@gmail.com"
-        # msg["Body"] = request.form["id_IPU_HVS"] + " " + request.form["HVS"] + request.form["id_IPU_GVS"] + " " + request.form["GVS"]
-
-        # with smtplib.SMTP('localhost') as s:
-        #     s.send_message(msg)
+        # email_to = 'sk@erc51.ru'
+        email_to = 'dmi3ii@gmail.com'
+        email_from = request.form['email']
+        email_subject = request.form['address']
+        email_message = request.form['id_IPU_HVS']+" "+request.form['HVS']+" "+request.form['id_IPU_GVS']+" "+request.form['GVS']
+        Send(email_to, email_from, email_subject, email_message)
 
         return True
     else:
@@ -46,15 +25,31 @@ def send_sk_at_erc51_ru():
 
 
 def send_oookola_v_centr_at_mail_ru():
-    '''
-    Мурмаши Энергетиков 7, 7
-    Dmitrey Kashkin <dmi3ii@gmail.com>	18 августа 2021 г., 18:03
-    Кому: Кольский Вычислительный Центр <oookola_v_centr@mail.ru>
-    1058900700
-    Мурмаши Энергетиков 7, 7
-    газ: 6.6
-    '''
     if request.form["send_oookola_v_centr_at_mail_ru"]:
+        # email_to = 'oookola_v_centr@mail.ru'
+        email_to = 'dmi3ii@gmail.com'
+        email_from = request.form['email']
+        email_subject = request.form['address']
+
+        email_message = request.form['address'] + "\n" + request.form['fio'] + "\n"
+        lsEL = request.form['lsEL']
+        if lsEL:
+            email_message = email_message + lsEL + "\n"
+
+        el = request.form['EL']
+        if el:
+            email_message = email_message + "Электричество: " + el + "\n"
+
+        lsGAZ = request.form['lsGAZ']
+        if lsGAZ:
+            email_message = email_message + lsGAZ + "\n"
+
+        gaz = request.form['GAZ']
+        if gaz:
+            email_message = email_message + "Газ:" + gaz + "\n"
+
+        Send(email_to, email_from, email_subject, email_message)
+
         return True
     else:
         return False
@@ -62,16 +57,18 @@ def send_oookola_v_centr_at_mail_ru():
 
 
 def send_ooo_megaplast_at_mail_ru():
-    '''
-    ГВС энергетиков 7, 7
-    Dmitrey Kashkin <dmi3ii@gmail.com>	18 августа 2021 г., 18:01
-    Кому: Мурмашинский расчётный центр <ooo-megaplast@mail.ru>
-
-    3170007000
-    Мурмаши. Энергетиков 7, 7
-    ГВС: 65
-    '''
     if request.form["send_ooo_megaplast_at_mail_ru"]:
+        # email_to = 'ooo-megaplast@mail.ru'
+        email_to = 'dmi3ii@gmail.com'
+        email_from = request.form['email']
+        email_subject = request.form['address']
+        email_message = request.form['lsGVS'] + "\n"
+        email_message = email_message + request.form['fio'] + "\n"
+        email_message = email_message + request.form['address'] + "\n"
+        email_message = email_message + "ГВС: " + request.form['GVS']
+
+        Send(email_to, email_from, email_subject, email_message)
+
         return True
     else:
         return False
@@ -80,10 +77,12 @@ def send_ooo_megaplast_at_mail_ru():
 
 @app.route('/send', methods=['POST', 'GET'])
 def send():
-    if request.method == 'POST':
+    if request.method == 'POST':        
+        print('=========================== START ===========================')
         g.send_sk_at_erc51_ru = send_sk_at_erc51_ru()
         g.send_oookola_v_centr_at_mail_ru = send_oookola_v_centr_at_mail_ru()
         g.send_ooo_megaplast_at_mail_ru = send_ooo_megaplast_at_mail_ru()
+        print('=========================== FINISH ===========================')
         return render_template('complete.html')
     else:
         g.active_send = True
