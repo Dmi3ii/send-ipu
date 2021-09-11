@@ -8,7 +8,7 @@
     <p class="d-none">{{ g.send_oookola_v_centr_at_mail_ru }}</p>
     <p class="d-none">{{ g.send_ooo_megaplast_at_mail_ru }}</p>
     <div class="display-1">
-        {{ request.form['fio'] }},
+        {{ request.form.get('fio') }},
     </div>
     <div class="display-6 text-secondary">Ваши показания отправлены. На ваш электронный адрес ({{ request.form['email'] }}) должны прийти ответные письма о приеме показаний от компаний предоставляющих услуги.</div>
 </div>

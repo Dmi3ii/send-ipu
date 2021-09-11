@@ -23,7 +23,7 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
 
     print("GOOGLE")
     print(str(pathlib.Path(__file__).parent.resolve()))
-    print(str(pathlib.Path().resolve()    ))
+    print(str(pathlib.Path().resolve()))
     print("pickle_file: " + pickle_file)
     print("pickle_file_exists: " + str(os.path.exists(pickle_file)))
     print("client_secret_file: " + client_secret_file)
