@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}Отправить показания{% endblock %}
+
+{% block body %}
+<div class="container text-center">
+    <p>{{ g.send_sk_at_erc51_ru }}</p>
+    <p>{{ g.send_oookola_v_centr_at_mail_ru }}</p>
+    <p>{{ g.send_ooo_megaplast_at_mail_ru }}</p>
+    <div class="display-1">
+        {{ request.form['fio'] }},
+    </div>
+    <div class="display-6 text-secondary">Ваши показания отправлены. На ваш электронный адрес ({{ request.form['email'] }}) должны прийти ответные письма о приеме показаний от компаний предоставляющих услуги.</div>
+</div>
+{% endblock %}
