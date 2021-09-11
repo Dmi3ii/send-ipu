@@ -19,4 +19,4 @@ mimeMessage.attach(MIMEText(emailMsg, 'plain'))
 raw_string = base64.urlsafe_b64encode(mimeMessage.as_bytes()).decode()
 
 message = service.users().messages().send(userId='me', body={'raw': raw_string}).execute()
-print(message)
+# print(message)

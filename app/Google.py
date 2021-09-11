@@ -16,8 +16,7 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
 
     cred = None
 
-    pickle_file = f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
-    # print(pickle_file)
+    pickle_file = f'../credentials/token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
 
     if os.path.exists(pickle_file):
         with open(pickle_file, 'rb') as token:
@@ -42,6 +41,3 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
         print(e)
         return None
 
-def convert_to_RFC_datetime(year=1900, month=1, day=1, hour=0, minute=0):
-    dt = datetime.datetime(year, month, day, hour, minute, 0).isoformat() + 'Z'
-    return dt
