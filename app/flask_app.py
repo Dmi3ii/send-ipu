@@ -15,6 +15,7 @@ def index():
 #     return render_template('test.html', name=name, num=num)
 
 def send_sk_at_erc51_ru():
+    smtplib
     # with open('test.html') as file:
     #     html = file.readlines()
     """
@@ -39,7 +40,7 @@ def send_sk_at_erc51_ru():
         # with smtplib.SMTP('localhost') as s:
         #     s.send_message(msg)
 
-        return html
+        return True
     else:
         return False
 
